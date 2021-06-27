@@ -12,7 +12,7 @@ void setup() {
   lcd.clear();
   lcd.print("Warming");
   delay(10000);
-  lcd.print("Ready")
+  lcd.print("Ready");
   
 }
 
@@ -45,3 +45,8 @@ void loop() {
   
   delay(1000);
 }
+
+int reading_to_BAC(int reading){
+  // Convert MQ-3 reading to BAC.
+  
+  }
