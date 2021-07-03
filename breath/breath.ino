@@ -1,13 +1,27 @@
+#include <LiquidCrystal.h>
+
+const int rs = 12, E = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2; // LCD pins
+LiquidCrystal lcd(rs, E, d4, d5, d6, d7);
+
 const int MQ3_PIN = A5;  // Pin for the alcohol sensor.
 int sensor_value;       // Value from the alcohol sensor.
-int loops = 20;
 
 void setup() {
   Serial.begin(9600);
+
+  // set up the LCD's number of columns and rows:
+  lcd.begin(8, 2);
+  lcd.print("Warming");
+  lcd.setCursor(0, 1);
+  lcd.print("Sensor");
+  
   pinMode(MQ3_PIN, INPUT);
+  
   Serial.println("Setup started");
   Serial.println("Warming up sensor...");
+  
   delay(10000);
+  
   Serial.println("Setup done!");
 }
 
@@ -17,16 +31,28 @@ void loop() {
   Serial.println(sensor_value);
     
   if (sensor_value < 120) {
-    // LCD = NYKTER
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Sober :(");
+    lcd.setCursor(0, 1);
+    lcd.print(sensor_value);
   }
   else if (sensor_value > 120 && sensor_value < 400 ){
-    // LCD= Booring
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Booring");
+    lcd.setCursor(0, 1);
+    lcd.print(sensor_value);
   }
   else if (sensor_value > 400) {
-    //LCD = DRUNK
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Drunk :)");
+    lcd.setCursor(0, 1);
+    lcd.print(sensor_value);
   }
   
-  delay(200);
+  delay(500);
 }
 
 int reading_to_BAC(int reading){
